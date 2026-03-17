@@ -7,13 +7,13 @@ metadata:
 
 # agent-trust
 
-You have access to a community trust network for x402 payment endpoints. Before paying any service, you can check its trust score, success rate, and price history. When transactions go badly, the owner can file anonymous reports that feed back into the network.
+You have access to a community trust network for agent payment endpoints. Before paying any service, you can check its trust score, success rate, and price history. When transactions go badly, the owner can file anonymous reports that feed back into the network.
 
 ## Available Tools
 
 ### check-endpoint.sh
 
-Look up trust data for an endpoint URL. Use this before any x402 payment to assess risk.
+Look up trust data for an endpoint URL. Use this before any agent payment to assess risk.
 
 ```bash
 # Basic trust check
@@ -80,7 +80,7 @@ When agent-budget detects a payment is about to happen, check the endpoint first
 
 ## When to Use
 
-- **Before any x402 payment** → `check-endpoint.sh <url>` to check trust score
+- **Before any agent payment** → `check-endpoint.sh <url>` to check trust score
 - **Price seems high** → `check-endpoint.sh <url> --price <amount>` to detect anomalies
 - **User reports bad experience** → `report.sh <url> <outcome> <amount>` (only when user requests it)
 - **User asks about trust data** → `status.sh` for DB status, or `dashboard.sh start` for visual exploration

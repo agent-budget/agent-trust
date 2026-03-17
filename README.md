@@ -1,6 +1,6 @@
 # agent-trust
 
-Community trust network for x402 payment endpoints. Downloads nightly trust scores, provides pre-transaction verification, and accepts anonymous outcome reports.
+Community trust network for agent payment endpoints. Downloads nightly trust scores, provides pre-transaction verification, and accepts anonymous outcome reports.
 
 ## Security & Privacy
 
@@ -28,7 +28,7 @@ git clone https://github.com/agent-budget/agent-trust.git ~/.openclaw/skills/age
 ## Use
 
 Ask your agent:
-- "Is this endpoint trustworthy?" (before an x402 payment)
+- "Is this endpoint trustworthy?" (before paying any service)
 - "Report that last transaction as a failure"
 - "Show me the trust dashboard"
 
