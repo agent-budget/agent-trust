@@ -1,39 +1,5 @@
 # agent-trust — Technical Architecture
 
-## Overview
-
-agent-trust is an OpenClaw skill that provides community-sourced trust intelligence for x402 payment endpoints. It downloads aggregated trust data from a CDN, provides instant local lookups, and accepts anonymous outcome signals that feed back into the network.
-
-## Architecture
-
-```
-~/.openclaw/skills/agent-trust/
-├── SKILL.md                    # Agent-facing instructions
-├── PROPOSAL.md                 # Design proposal
-├── README.md                   # User-facing overview
-├── TECHNICAL.md                # This file
-├── package.json                # Minimal metadata (zero dependencies)
-├── scripts/
-│   ├── dashboard.sh            # Start/stop/manage the dashboard server
-│   ├── sync-trust-db.sh        # Downloads trust.json from CDN
-│   ├── check-endpoint.sh       # Queries local trust DB for an endpoint
-│   ├── report.sh               # Queues anonymous signal for submission
-│   └── status.sh               # Shows trust DB age, coverage, sync status
-├── server/
-│   ├── trust-db.js             # Data layer: DB loading, lookup, scoring, config
-│   ├── reporter.js             # Signal construction, queue, submission
-│   ├── server.js               # HTTP API server (localhost only, no frameworks)
-│   └── index.html              # Single-file dashboard UI
-├── data/
-│   ├── trust.json              # Local copy of trust database (downloaded nightly)
-│   ├── pending-reports.jsonl   # Reports queued for submission
-│   └── config.json             # Local configuration (generated on first run)
-├── references/
-│   └── signal-format.md        # Signal schema & score formula documentation
-└── test/
-    └── test.js                 # Tests covering data layer, reporter, and API
-```
-
 ## Design Decisions
 
 ### Zero dependencies
@@ -195,22 +161,19 @@ All tests use temporary directories and clean up after themselves.
 
 ## Server-Side Components
 
-Hosted on the spendlog.ai droplet (Hetzner + Cloudflare):
+Hosted at `api.agent-trust.net` ([github.com/mattpolly/agent-trust.net](https://github.com/mattpolly/agent-trust.net)):
 
 ### Reporting endpoint
 
-`POST https://api.spendlog.ai/reports` — Accepts anonymous signals. Validates format, checks rate limits (max 100 signals per reporter_hash per day), appends to processing queue.
+`POST https://api.agent-trust.net/reports` — Accepts anonymous signals. Validates format, checks rate limits (100 signals per `reporter_hash` per day), inserts into SQLite via `INSERT OR IGNORE` (deduplicates on reporter + endpoint + day).
 
 ### Aggregation pipeline
 
-Runs nightly:
-1. Read all signals from queue
-2. Deduplicate (same reporter + endpoint + day = one signal)
-3. Recompute per-endpoint stats: report count, success rate, price distribution, failure types, score, warnings
-4. Generate new `trust.json`
-5. Push to Cloudflare CDN
-6. Archive processed signals
+`aggregate.py` runs nightly via cron:
+1. Read all signals from SQLite
+2. Recompute per-endpoint stats: report count, success rate, price distribution, failure types, score, warnings
+3. Atomic write of new `trust.json` (temp file + rename)
 
-### CDN delivery
+### Trust database delivery
 
-`GET https://cdn.spendlog.ai/trust.json` — Served from Cloudflare edge. Cache TTL: 1 hour. Clients check daily by default.
+`GET https://api.agent-trust.net/trust.json` — served directly by nginx with `Cache-Control: public, max-age=3600`. Clients sync daily by default.
