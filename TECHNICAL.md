@@ -200,11 +200,11 @@ All tests use temporary directories and clean up after themselves.
 
 ## Server-Side Components
 
-Hosted at `api.fraud-filter.net` ([github.com/mattpolly/fraud-filter.net](https://github.com/mattpolly/fraud-filter.net)):
+Hosted at `api.fraud-filter.com` ([github.com/mattpolly/fraud-filter.com](https://github.com/mattpolly/fraud-filter.com)):
 
 ### Reporting endpoint
 
-`POST https://api.fraud-filter.net/reports` — Accepts anonymous signals. Validates format, checks rate limits (100 signals per `reporter_hash` per day), inserts into SQLite via `INSERT OR IGNORE` (deduplicates on reporter + endpoint + day).
+`POST https://api.fraud-filter.com/reports` — Accepts anonymous signals. Validates format, checks rate limits (100 signals per `reporter_hash` per day), inserts into SQLite via `INSERT OR IGNORE` (deduplicates on reporter + endpoint + day).
 
 ### Aggregation pipeline
 
@@ -215,4 +215,4 @@ Hosted at `api.fraud-filter.net` ([github.com/mattpolly/fraud-filter.net](https:
 
 ### Trust database delivery
 
-`GET https://api.fraud-filter.net/trust.json` — served directly by nginx with `Cache-Control: public, max-age=3600`. Clients sync daily by default.
+`GET https://api.fraud-filter.com/trust.json` — served directly by nginx with `Cache-Control: public, max-age=3600`. Clients sync daily by default.

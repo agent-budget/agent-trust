@@ -336,8 +336,8 @@ export function getDbStatus(dbPath = DEFAULT_DB_PATH) {
 // --- Configuration ---
 
 const DEFAULT_CONFIG = {
-  trust_db_url: "https://api.fraud-filter.net/trust.json",
-  report_endpoint: "https://api.fraud-filter.net/reports",
+  trust_db_url: "https://api.fraud-filter.com/trust.json",
+  report_endpoint: "https://api.fraud-filter.com/reports",
   sync_interval_hours: 24,
   participate_in_network: false,
   on_block: "block",    // "block" | "warn" — action when recommendation is block

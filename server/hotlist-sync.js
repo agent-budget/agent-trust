@@ -1,7 +1,7 @@
 /**
  * Hotlist sync.
  *
- * Fetches api.fraud-filter.net/hotlist.json hourly and caches it to
+ * Fetches api.fraud-filter.com/hotlist.json hourly and caches it to
  * data/hotlist.json. The hotlist contains endpoint hashes that have received
  * a surge of failure reports in the last 24 hours — providing faster blocking
  * than waiting for the nightly trust.json rebuild.
@@ -14,7 +14,7 @@ import { resolve, dirname } from "node:path";
 
 const HOTLIST_URL =
   process.env.FRAUD_FILTER_HOTLIST_URL ||
-  "https://api.fraud-filter.net/hotlist.json";
+  "https://api.fraud-filter.com/hotlist.json";
 
 const HOTLIST_CACHE_PATH = resolve(
   process.env.FRAUD_FILTER_HOTLIST ||

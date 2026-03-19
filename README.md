@@ -22,7 +22,7 @@ clawhub install fraud-filter
 Or manually:
 
 ```bash
-git clone https://github.com/agent-budget/fraud-filter.git ~/.openclaw/skills/fraud-filter
+git clone https://github.com/fraud-filter/fraud-filter.git ~/.openclaw/skills/fraud-filter
 ```
 
 ## Use
@@ -55,11 +55,12 @@ In `~/.openclaw/openclaw.json` or via the dashboard Settings tab:
     "fraud-filter": {
       "enabled": true,
       "config": {
-        "trust_db_url":    "https://api.fraud-filter.net/trust.json",
-        "report_endpoint": "https://api.fraud-filter.net/reports",
+        "trust_db_url":    "https://api.fraud-filter.com/trust.json",
+        "report_endpoint": "https://api.fraud-filter.com/reports",
         "sync_interval_hours": 24,
         "participate_in_network": false,
-        "auto_positive_signals": false
+        "on_block":   "block",
+        "on_caution": "warn"
       }
     }
   }
