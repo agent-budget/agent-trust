@@ -1,8 +1,17 @@
 ---
 name: fraud-filter
-description: Transaction outcome report network for agent payment endpoints. Downloads nightly satisfaction scores, provides pre-transaction verification, and submits anonymous outcome reports. Dashboard at http://127.0.0.1:18921 (run dashboard.sh start)
+description: Community trust scores for AI agent payment endpoints — checks endpoint reputation before payment and auto-reports failures to the network.
+version: 0.3.0
 metadata:
-  { "openclaw": { "emoji": "🛡️" } }
+  openclaw:
+    emoji: "🛡️"
+    homepage: https://fraud-filter.com
+    requires:
+      bins:
+        - node
+    os:
+      - macos
+      - linux
 ---
 
 # fraud-filter
